@@ -102,6 +102,9 @@ int main(int argc, char** argv) {
 			if (IPsearch(IPtable, inputID)) { //확진자가 존재한다면 
 				QTsearchView(IPtable[inputID].qurantineList, inputID);
 			}
+			else {
+				printf("확진자가 존재하지 않습니다. 다시 입력해주십시오.\n");
+			}
 		}
 		else {
 			printf("다시 입력해주세요.\n");
