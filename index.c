@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "./include/hashTableArr.h"
+#include "./include/infected.h"
 #include "./include/stringLib.h"
 #include "./include/quarantine.h" 
 
@@ -13,7 +13,7 @@ void IPscan(int* gender, int *age, char region[50]) {
 	scanf("%d", age);
 	getchar(); //입력버퍼 비우기 
 	printf("region: ");
-	scanf("%s", region);
+	scanf("%[^\n]s", region); //공백 입력 가능 
 	getchar(); //입력버퍼 비우기
 }
 
@@ -49,10 +49,16 @@ int main(int argc, char** argv) {
 	IPinit(IPtable, 0, 2);
 	char order;
 	int IPpushIndex = 1;
+	int descriptionView = 0;
 
-	printf("[주문] 0: 프로그램 종료, 1: 확진자 추가, 2: 확진자 검색, 3: 확진자 삭제\n");
-	printf("       4: 밀접접촉자 추가, 5: 밀접접촉자 검색\n");
 	while (1) {
+		if (descriptionView == 0) {
+			printf("\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n");
+			printf("[주문] 0: 프로그램 종료\n"); 
+			printf("       1: 확진자 추가, 2: 확진자 검색, 3: 확진자 삭제\n");
+			printf("       4: 밀접접촉자 추가, 5: 밀접접촉자 검색, 6: 밀접접촉자 삭제\n");
+			printf("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n");
+		}
 		printf("\n[주문]: ");
 		scanf("%c", &order);
 		getchar(); //입력버퍼 비우기
@@ -69,6 +75,7 @@ int main(int argc, char** argv) {
 			//배열의 크기가 부족하면 sizeup 
 			if (IPpushIndex >= IParrSize(IPtable)) {
 				IPtable = tableSizeUP(IPtable, IParrSize(IPtable));
+				printf("사이즈업\n");
 			}
 			IPpush(&IPtable[IPpushIndex], IPpushIndex, gender, age, region);
 			IPpushIndex++;
@@ -81,7 +88,17 @@ int main(int argc, char** argv) {
 			IPsearchView(IPtable, searchIndex);
 		}
 		else if (order == '3') {
-			printf("확진자 삭제 아직 미구현\n");
+			int IPID;
+			printf("삭제할 확진자의 ID: ");
+			scanf("%d", &IPID);
+			getchar();
+			if (IPsearch(IPtable, IPID)) {
+				IPremove(IPtable, IPID);
+				//IPpushIndex--;
+				printf("확진자 삭제 완료\n");
+			}
+			else
+				printf("확진자가 존재하지 않습니다. 다시 입력해주십시오.\n");
 		}
 		else if (order == '4') { //밀접접촉자 추가
 			int IPID; //어느 확진자의 밀접접촉자인지 
@@ -106,9 +123,32 @@ int main(int argc, char** argv) {
 				printf("확진자가 존재하지 않습니다. 다시 입력해주십시오.\n");
 			}
 		}
-		else {
+		else if (order == '6') { //밀접접촉자 삭제 
+			int IPID;
+			int QID;
+			printf("확진자ID: ");
+			scanf("%d", &IPID);
+			getchar();
+			if (IPsearch(IPtable, IPID)) {
+				printf("밀접접촉자ID: ");
+				scanf("%d", &QID);
+				getchar();
+				if (QTremove(IPtable[IPID].qurantineList, QID))
+					printf("밀접접촉자 삭제가 완료되었습니다.\n");
+				else
+					printf("밀접접촉자가 존재하지 않습니다.\n");
+			}
+			else
+				printf("확진자가 존재하지 않습니다. 다시 입력해주십시오.\n");
+		}
+		else { 
 			printf("다시 입력해주세요.\n");
 		}
+		
+		if (descriptionView == 4)
+			descriptionView = 0;
+		else
+			descriptionView++;
 	}
 	
 	return 0;
