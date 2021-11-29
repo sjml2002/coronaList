@@ -8,19 +8,19 @@
 
 typedef struct InfectedPerson {
 	int ID;
-	int gender; //0: ³²ÀÚ, 1: ¿©ÀÚ
+	int gender; //0: ë‚¨ì, 1: ì—¬ì
 	int age;
-	char region[50]; //Áö¿ª
-	QT* qurantineList; //¹ĞÁ¢Á¢ÃËÀÚ ¸®½ºÆ® 
+	char region[50]; //ì§€ì—­
+	QT* qurantineList; //ë°€ì ‘ì ‘ì´‰ì ë¦¬ìŠ¤íŠ¸ 
 } IP;
 
 
 
-///// ÇÔ¼ö ¿øÇü /////
+///// í•¨ìˆ˜ ì›í˜• /////
 int IParrSize(IP* ip);
 void IPpush(IP* ip, int ID, int gender, int age, char* region);
 int IPsearch(IP* ip, int ID);
-void IPsearchView(IP* ip, int ID);
+void IPsearchView(IP* ip, int ID, FILE *_output);
 void IPinit(IP* ip, int start, int end);
 IP* tableSizeUP(IP* arr, int size);
 IP* tableSizeDown(IP* arr, int size);
@@ -28,20 +28,20 @@ void IParrCpy(IP* dest, IP* src, int size);
 
 
 
-///// ÇÔ¼ö ÀÛ¼º /////
+///// í•¨ìˆ˜ ì‘ì„± /////
 int IParrSize(IP* ip) {
 	return _msize(ip) / sizeof(IP);
 }
 
 void IPinit(IP* ip, int start, int end) {
 	while (start <= end) {
-		//¹ĞÁ¢Á¢ÃËÀÚ ¸®½ºÆ® 1 Å©±â ÇÒ´ç 
-		//printf("%d¹ø QTsize: %d\n", start, _msize(ip[start].qurantineList));
+		//ë°€ì ‘ì ‘ì´‰ì ë¦¬ìŠ¤íŠ¸ 1 í¬ê¸° í• ë‹¹ 
+		//printf("%dë²ˆ QTsize: %d\n", start, _msize(ip[start].qurantineList));
 		ip[start].ID = -1;
 		ip[start].qurantineList = (QT*)malloc(sizeof(QT));
 		//qurantine init
 		QTpush(ip[start].qurantineList, "h", 0);
-		ip[start].qurantineList->ID = -1; //headÀÇ ID´Â -1 
+		ip[start].qurantineList->ID = -1; //headì˜ IDëŠ” -1 
 		start++;
 	}
 }
@@ -54,18 +54,18 @@ void IPpush(IP* ip, int ID, int gender, int age, char* region) {
 }
 
 int IPsearch(IP* ip, int ID) {
-	//¼±¾ğÀÌ ¾Æ¿¹ ¾ÈµÈ °æ¿ì°Å³ª ¼±¾ğÀÌ µÆÁö¸¸ µ¥ÀÌÅÍ°¡ µé¾î°¡Áö ¾ÊÀº°æ¿ì
+	//ì„ ì–¸ì´ ì•„ì˜ˆ ì•ˆëœ ê²½ìš°ê±°ë‚˜ ì„ ì–¸ì´ ëì§€ë§Œ ë°ì´í„°ê°€ ë“¤ì–´ê°€ì§€ ì•Šì€ê²½ìš°
 	if(ip[ID].ID == -1 || ID <= 0 || ID >= IParrSize(ip)){
-		return 0; //µ¥ÀÌÅÍ ¹ÌÁ¸Àç (°Ë»ö ºÒ°¡) 
+		return 0; //ë°ì´í„° ë¯¸ì¡´ì¬ (ê²€ìƒ‰ ë¶ˆê°€) 
 	}
 	else {
-		return 1; //µ¥ÀÌÅÍ Á¸Àç 
+		return 1; //ë°ì´í„° ì¡´ì¬ 
 	}
 }
 
-void IPsearchView(IP* ip, int ID) {
+void IPsearchView(IP* ip, int ID, FILE *_output) {
 	if (ID == 0) {
-		printf("\n---- È®ÁøÀÚ ÀüÃ¼ °Ë»ö ----\n");
+		printf("\n---- í™•ì§„ì ì „ì²´ ê²€ìƒ‰ ----\n");
 		int size = IParrSize(ip);
 		int i = 1;
 		while (i <= size) {
@@ -78,20 +78,37 @@ void IPsearchView(IP* ip, int ID) {
 			}
 			i++;
 		}
+	} 
+	else if (ID == -1) {
+		_output = fopen("output.txt", "w"); //ì¶œë ¥ìš© íŒŒì¼ ì“°ê¸°ëª¨ë“œë¡œ ë¶€ë¥´ê¸° 
+		printf("\n---- í™•ì§„ì ì „ì²´ ë‚´ë³´ë‚´ëŠ” ì¤‘ ... ----\n");
+		int size = IParrSize(ip);
+		int i = 1;
+		while (i <= size) {
+			if (ip[i].ID != -1) {
+				fprintf(_output, "ID: %d\n", ip[i].ID);
+				fprintf(_output, "gender: %d\n", ip[i].gender);
+				fprintf(_output, "age: %d\n", ip[i].age);
+				fprintf(_output, "region: %s\n", ip[i].region);
+				fprintf(_output, "\n"); 
+			}
+			i++;
+		}
+		fclose(_output);
 	}
 	else {
 		int searchResult = IPsearch(ip, ID);
 		if(!searchResult){
-			printf("\nÈ®ÁøÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n");
+			printf("\ní™•ì§„ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
 		}
 		else {
-			printf("\n---- È®ÁøÀÚ ID: %d °Ë»ö ----\n", ip[ID].ID);
+			printf("\n---- í™•ì§„ì ID: %d ê²€ìƒ‰ ----\n", ip[ID].ID);
 			printf("gender: %d\n", ip[ID].gender);
 			printf("age: %d\n", ip[ID].age);
 			printf("region: %s\n", ip[ID].region);
 		}
 	}
-	printf("---- È®ÁøÀÚ °Ë»ö Á¾·á ----\n\n");
+	printf("---- í™•ì§„ì ê²€ìƒ‰ ì¢…ë£Œ ----\n\n");
 }
 
 IP* tableSizeUP(IP* arr, int size) {
@@ -100,7 +117,7 @@ IP* tableSizeUP(IP* arr, int size) {
 	free(arr);
 	arr = '\0';
 	arr = (IP*)malloc(size + (10 * sizeof(IP)));
-	IParrCpy(arr, tmpSrc, 10); //»çÀÌÁî ´Ã¸° ¹è¿­¿¡ ´Ù½Ã ¿ø·¡ µ¥ÀÌÅÍ º¹»ç
+	IParrCpy(arr, tmpSrc, 10); //ì‚¬ì´ì¦ˆ ëŠ˜ë¦° ë°°ì—´ì— ë‹¤ì‹œ ì›ë˜ ë°ì´í„° ë³µì‚¬
 	IPinit(arr, size, size + 10);
 	return arr;
 }
