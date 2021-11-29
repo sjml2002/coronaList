@@ -7,14 +7,14 @@
 
 typedef struct Quarantine {
 	int ID;
-	int vaccination; //0:¹ÌÁ¢Á¾, 1:1Â÷, 2:2Â÷ ÈÄ 14ÀÏ ¹Ì°æ°ú, 3: Á¢Á¾¿Ï·á
-	char vaccineName[20]; //¹é½Å ÀÌ¸§ 
+	int vaccination; //0:ë¯¸ì ‘ì¢…, 1:1ì°¨, 2:2ì°¨ í›„ 14ì¼ ë¯¸ê²½ê³¼, 3: ì ‘ì¢…ì™„ë£Œ
+	char vaccineName[20]; //ë°±ì‹  ì´ë¦„ 
 	struct Quarantine* nextQT;
 } QT;
 
 
 
-///// ÇÔ¼ö ¿øÇü /////
+///// í•¨ìˆ˜ ì›í˜• /////
 int QTlinkedListSize(QT* qt);
 void QTpush(QT* qt, char* vaccineName, int vaccination);
 void QTsearchView(QT* qt, int IPID);
@@ -22,7 +22,7 @@ int QTremove(QT* qt, int QID);
 void QTremoveAll(QT* qt);
 
 
-///// ÇÔ¼ö ÀÛ¼º /////
+///// í•¨ìˆ˜ ìž‘ì„± /////
 int QTlinkedListSize(QT* qt) {
 	int size = 0;
 	while(qt->nextQT != '\0') {
@@ -32,50 +32,50 @@ int QTlinkedListSize(QT* qt) {
 	return size;
 }
 
-//¹ÐÁ¢Á¢ÃËÀÚ Ãß°¡ 
+//ë°€ì ‘ì ‘ì´‰ìž ì¶”ê°€ 
 void QTpush(QT* qt, char* vaccineName, int vaccination) {
 	QT* tmp = qt; 
 	if (vaccineName[0] == 'h') { //head init
 		qt->ID = -1;
 	}
-	else { //Á¤»ó push
+	else { //ì •ìƒ push
 		int prevID = 0;
-		while (tmp->nextQT != '\0') { //¸µÅ©µå ¸®½ºÆ®ÀÇ ¸Ç ³¡±îÁö ÀÌµ¿
+		while (tmp->nextQT != '\0') { //ë§í¬ë“œ ë¦¬ìŠ¤íŠ¸ì˜ ë§¨ ëê¹Œì§€ ì´ë™
 			prevID = tmp->ID;
 			tmp = tmp->nextQT;
 		}
-		//°ª ÇÒ´ç 
+		//ê°’ í• ë‹¹ 
 		tmp->ID = prevID + 1;
 		tmp->vaccination = vaccination;
 		ct_strcpy(tmp->vaccineName, vaccineName);
 	}
-	//»õ·Î¿î ³ëµå ¸Þ¸ð¸® ÇÒ´ç ¹× nextQT¸¦ nullptr·Î ÃÊ±âÈ­
+	//ìƒˆë¡œìš´ ë…¸ë“œ ë©”ëª¨ë¦¬ í• ë‹¹ ë° nextQTë¥¼ nullptrë¡œ ì´ˆê¸°í™”
 	QT* newNode = (QT*)malloc(sizeof(QT)); 
 	newNode->nextQT = '\0';
-	//ÇöÀç nextQT °ª ÇÒ´ç
+	//í˜„ìž¬ nextQT ê°’ í• ë‹¹
 	tmp->nextQT = newNode;
 }
 
-//¹ÐÁ¢Á¢ÃËÀÚ ÀüÃ¼ °Ë»ö 
+//ë°€ì ‘ì ‘ì´‰ìž ì „ì²´ ê²€ìƒ‰ 
 void QTsearchView(QT* qt, int IPID) {
 	const char* vacStr[4] = {
-		"¹ÌÁ¢Á¾", "1Â÷Á¢Á¾", "2Â÷Á¢Á¾ ÈÄ 14ÀÏ ¹Ì°æ°ú", "Á¢Á¾¿Ï·á"
+		"ë¯¸ì ‘ì¢…", "1ì°¨ì ‘ì¢…", "2ì°¨ì ‘ì¢… í›„ 14ì¼ ë¯¸ê²½ê³¼", "ì ‘ì¢…ì™„ë£Œ"
 	};
-	printf("\n---- È®ÁøÀÚID: %dÀÇ ¹ÐÁ¢Á¢ÃËÀÚ ÀüÃ¼ °Ë»ö ----\n", IPID);
+	printf("\n---- í™•ì§„ìžID: %dì˜ ë°€ì ‘ì ‘ì´‰ìž ì „ì²´ ê²€ìƒ‰ ----\n", IPID);
 	while (qt->nextQT != 0) {
 		if(qt->ID != -1) {
 			printf("QID: %d\n", qt->ID);
-			printf("¹é½ÅÀÌ¸§: %s , %s\n", qt->vaccineName, vacStr[qt->vaccination]);
+			printf("ë°±ì‹ ì´ë¦„: %s , %s\n", qt->vaccineName, vacStr[qt->vaccination]);
 			printf("\n");
 		}
 		qt = qt->nextQT;
 	}
-	printf("---- ¹ÐÁ¢Á¢ÃËÀÚ °Ë»ö Á¾·á ----\n\n");
+	printf("---- ë°€ì ‘ì ‘ì´‰ìž ê²€ìƒ‰ ì¢…ë£Œ ----\n\n");
 }
 
-//¹ÐÁ¢Á¢ÃËÀÚ 1¸í »èÁ¦
+//ë°€ì ‘ì ‘ì´‰ìž 1ëª… ì‚­ì œ
 int QTremove(QT* qt, int QID) {
-	QT* prevQT = qt; //ÀÌÀü QTÆ÷ÀÎÅÍ ÀÓ½Ã ÀúÀå
+	QT* prevQT = qt; //ì´ì „ QTí¬ì¸í„° ìž„ì‹œ ì €ìž¥
 	qt = qt->nextQT; 
 	while (qt->nextQT != 0) { 
 		if (qt->ID == QID) {
@@ -91,7 +91,7 @@ int QTremove(QT* qt, int QID) {
 	return 0;
 }
 
-//¹ÐÁ¢Á¢ÃËÀÚ ÀüÃ¼ »èÁ¦ 
+//ë°€ì ‘ì ‘ì´‰ìž ì „ì²´ ì‚­ì œ 
 void QTremoveAll(QT* qt) {
 	if(qt->nextQT != 0) {
 		QTremoveAll(qt->nextQT);
