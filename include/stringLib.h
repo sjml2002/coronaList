@@ -1,11 +1,11 @@
 #ifndef __STRINGLIB_H
 #define __STRINGLIB_H
 
-//ÇÔ¼ö ¿øÇü 
+//í•¨ìˆ˜ ì›í˜• 
 void ct_strcpy (char* dest, char* src);
 
-//ÇÔ¼ö ÀÛ¼º 
-void ct_strcpy (char* dest, char* src) { //¹®ÀÚ¿­ ±æÀÌ ±¸ÇÏ±â 
+//í•¨ìˆ˜ ì‘ì„± 
+void ct_strcpy (char* dest, char* src) { //ë¬¸ìì—´ ê¸¸ì´ êµ¬í•˜ê¸° 
 	while (*src) {
 		*dest = *src;
 		dest++;
