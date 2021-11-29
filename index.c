@@ -3,47 +3,47 @@
 #include "./include/stringLib.h"
 #include "./include/quarantine.h" 
 
-//í™•ì§„ì ì¶”ê°€ì‹œ í™•ì§„ì ì •ë³´ ì…ë ¥ í•¨ìˆ˜ 
+//È®ÁøÀÚ Ãß°¡½Ã È®ÁøÀÚ Á¤º¸ ÀÔ·Â ÇÔ¼ö 
 void IPscan(int* gender, int *age, char region[50]) {
-	printf("í™•ì§„ìì˜ ì •ë³´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
-	printf("gender (0:ë‚¨ì, 1:ì—¬ì): ");
+	printf("È®ÁøÀÚÀÇ Á¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+	printf("gender (0:³²ÀÚ, 1:¿©ÀÚ): ");
 	scanf("%d", gender);
-	getchar(); //ì…ë ¥ë²„í¼ ë¹„ìš°ê¸°
+	getchar(); //ÀÔ·Â¹öÆÛ ºñ¿ì±â
 	printf("age: ");
 	scanf("%d", age);
-	getchar(); //ì…ë ¥ë²„í¼ ë¹„ìš°ê¸° 
+	getchar(); //ÀÔ·Â¹öÆÛ ºñ¿ì±â 
 	printf("region: ");
-	scanf("%[^\n]s", region); //ê³µë°± ì…ë ¥ ê°€ëŠ¥ 
-	getchar(); //ì…ë ¥ë²„í¼ ë¹„ìš°ê¸°
+	scanf("%[^\n]s", region); //°ø¹é ÀÔ·Â °¡´É 
+	getchar(); //ÀÔ·Â¹öÆÛ ºñ¿ì±â
 }
 
-//ë°€ì ‘ì ‘ì´‰ì ì¶”ê°€ì‹œ ë°€ì ‘ì ‘ì´‰ì ì •ë³´ ì…ë ¥ í•¨ìˆ˜
+//¹ĞÁ¢Á¢ÃËÀÚ Ãß°¡½Ã ¹ĞÁ¢Á¢ÃËÀÚ Á¤º¸ ÀÔ·Â ÇÔ¼ö
 int QTscan(IP* ip, int* IPID, char* vaccineName, int* vaccination) {
-	printf("ë°€ì ‘ì ‘ì´‰ìì˜ ì •ë³´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
-	//í™•ì§„ìID ì…ë ¥
+	printf("¹ĞÁ¢Á¢ÃËÀÚÀÇ Á¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+	//È®ÁøÀÚID ÀÔ·Â
 	int tmpIPID;
-	printf("í™•ì§„ìID: ");
+	printf("È®ÁøÀÚID: ");
 	scanf("%d", &tmpIPID);
 	getchar();
-	if (IPsearch(ip, tmpIPID)) { //í™•ì§„ìê°€ ì¡´ì¬í•œë‹¤ë©´ 
+	if (IPsearch(ip, tmpIPID)) { //È®ÁøÀÚ°¡ Á¸ÀçÇÑ´Ù¸é 
 		*IPID = tmpIPID;
 	}
 	else {
-		printf("í™•ì§„ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì‹­ì‹œì˜¤.\n");
+		printf("È®ÁøÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ½Ê½Ã¿À.\n");
 		return 0;
 	}
-	printf("ë°±ì‹  ì ‘ì¢… ì—¬ë¶€ (0: ë¯¸ì ‘ì¢…, 1: 1ì°¨ì ‘ì¢…, 2: 2ì°¨ì ‘ì¢… í›„ 14ì¼ ë¯¸ê²½ê³¼, 3: ì ‘ì¢…ì™„ë£Œ): ");
+	printf("¹é½Å Á¢Á¾ ¿©ºÎ (0: ¹ÌÁ¢Á¾, 1: 1Â÷Á¢Á¾, 2: 2Â÷Á¢Á¾ ÈÄ 14ÀÏ ¹Ì°æ°ú, 3: Á¢Á¾¿Ï·á): ");
 	scanf("%d", vaccination);
-	getchar(); //ì…ë ¥ë²„í¼ ë¹„ìš°ê¸°
+	getchar(); //ÀÔ·Â¹öÆÛ ºñ¿ì±â
 	if (*vaccination != 0) {
-		printf("ë°±ì‹  ì´ë¦„: ");
+		printf("¹é½Å ÀÌ¸§: ");
 		scanf("%s", vaccineName);
-		getchar(); //ì…ë ¥ë²„í¼ ë¹„ìš°ê¸° 
+		getchar(); //ÀÔ·Â¹öÆÛ ºñ¿ì±â 
 	}
 	return 1;
 } 
 
-///// ë©”ì¸ í•¨ìˆ˜ ///// 
+///// ¸ŞÀÎ ÇÔ¼ö ///// 
 int main(int argc, char** argv) {
 	IP* IPtable = (IP*)malloc(2 * sizeof(IP));
 	IPinit(IPtable, 0, 2);
@@ -54,120 +54,131 @@ int main(int argc, char** argv) {
 
 	while (1) {
 		if (descriptionView == 0) {
-			printf("\nã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡\n");
-			printf("[ì£¼ë¬¸] 0: í”„ë¡œê·¸ë¨ ì¢…ë£Œ\n"); 
-			printf("       1: í™•ì§„ì ì¶”ê°€, 2: í™•ì§„ì ê²€ìƒ‰, 3: í™•ì§„ì ì‚­ì œ\n");
-			printf("       4: ë°€ì ‘ì ‘ì´‰ì ì¶”ê°€, 5: ë°€ì ‘ì ‘ì´‰ì ê²€ìƒ‰, 6: ë°€ì ‘ì ‘ì´‰ì ì‚­ì œ\n");
-			printf("ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡ã…¡\n");
+			printf("\n¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ\n");
+			printf("[ÁÖ¹®] 0: ÇÁ·Î±×·¥ Á¾·á\n"); 
+			printf("       1: È®ÁøÀÚ Ãß°¡, 2: È®ÁøÀÚ °Ë»ö, 3: È®ÁøÀÚ »èÁ¦\n");
+			printf("       4: ¹ĞÁ¢Á¢ÃËÀÚ Ãß°¡, 5: ¹ĞÁ¢Á¢ÃËÀÚ °Ë»ö, 6: ¹ĞÁ¢Á¢ÃËÀÚ »èÁ¦\n");
+			printf("¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ\n");
 		}
-		printf("\n[ì£¼ë¬¸]: ");
+		printf("\n[ÁÖ¹®]: ");
 		scanf("%c", &order);
-		getchar(); //ì…ë ¥ë²„í¼ ë¹„ìš°ê¸°
-		if (order == '0') { //í”„ë¡œê·¸ë¨ ì¢…ë£Œ
-			printf("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\n");
+		getchar(); //ÀÔ·Â¹öÆÛ ºñ¿ì±â
+		if (order == '0') { //ÇÁ·Î±×·¥ Á¾·á
+			printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
 			return 0;
 		}
-		else if (order == '1') {  // í™•ì§„ì ì¶”ê°€
+		else if (order == '1') {  // È®ÁøÀÚ Ãß°¡
 			int gender;
 			int age;
 			char region[50];
 			int usr_cmd = -1;
 			
-			printf("ì™¸ë¶€ í…ìŠ¤íŠ¸ íŒŒì¼ì—ì„œ ë¶ˆëŸ¬ì˜¤ì‹œê² ìŠµë‹ˆê¹Œ? (1 ì…ë ¥ì‹œ ë¶ˆëŸ¬ì˜¤ê¸° ì§„í–‰)");
+			printf("¿ÜºÎ ÅØ½ºÆ® ÆÄÀÏ¿¡¼­ ºÒ·¯¿À½Ã°Ú½À´Ï±î? (1 ÀÔ·Â½Ã ºÒ·¯¿À±â ÁøÇà)");
 			scanf("%d", &usr_cmd);
-			getchar(); //ì…ë ¥ ë²„í¼ ì œê±° 
+			getchar(); //ÀÔ·Â ¹öÆÛ Á¦°Å 
 			
 			if(usr_cmd == 1){
-				files = fopen("input.txt", "r"); //ì…ë ¥ìš© íŒŒì¼ ì½ê¸°ëª¨ë“œë¡œ ë¶€ë¥´ê¸° 
-				while( !feof(files) ){
-					fscanf(files, "%d\t%d\t%s\n", &gender, &age, &region);
-					//í™•ì§„ìë¥¼ ì¶”ê°€í• ë ¤ëŠ”ë°
-					//ë°°ì—´ì˜ í¬ê¸°ê°€ ë¶€ì¡±í•˜ë©´ sizeup 
-					if (IPpushIndex >= IParrSize(IPtable)) {
-						IPtable = tableSizeUP(IPtable, IParrSize(IPtable));
-						printf("ì‚¬ì´ì¦ˆì—…\n");
-					}
-					IPpush(&IPtable[IPpushIndex], IPpushIndex, gender, age, region);
-					IPpushIndex++;       
-				}	
-				fclose(files);
-				printf("ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ\n");
+				files = fopen("input.txt", "r"); //ÀÔ·Â¿ë ÆÄÀÏ ÀĞ±â¸ğµå·Î ºÎ¸£±â
+				int c = fgetc(files);
+				if (c == EOF) {
+					//file is empty
+					printf("ÆÄÀÏÀÌ ºñ¾îÀÖ½À´Ï´Ù.\n");
+				}
+				else {
+					ungetc(c, files);
+					while(!feof(files)){
+						fscanf(files, "%d\t%d\t%s\n", &gender, &age, &region);
+						//feof´Â ÆÄÀÏÆ÷ÀÎÅÍ(files)°¡ ³¡À» °¡¸®ÄÑµµ ÇÑ¹ø ´õ ½ÇÇàµÊ
+						//µû¶ó¼­ ¹öÆÛ¿¡ ÀÖ´Â °ªÀÌ fscanf·Î µé¾î°¨ 
+						//if (feof(files)) break;
+						//È®ÁøÀÚ¸¦ Ãß°¡ÇÒ·Á´Âµ¥
+						//¹è¿­ÀÇ Å©±â°¡ ºÎÁ·ÇÏ¸é sizeup 
+						if (IPpushIndex >= IParrSize(IPtable)) {
+							IPtable = tableSizeUP(IPtable, IParrSize(IPtable));
+							printf("»çÀÌÁî¾÷\n");
+						}
+						IPpush(&IPtable[IPpushIndex], IPpushIndex, gender, age, region);
+						IPpushIndex++;       
+					}	
+					fclose(files);
+					printf("ºÒ·¯¿À±â ¿Ï·á\n");
+				}
 			} else {
 				IPscan(&gender, &age, region);
-				//í™•ì§„ìë¥¼ ì¶”ê°€í• ë ¤ëŠ”ë°
-				//ë°°ì—´ì˜ í¬ê¸°ê°€ ë¶€ì¡±í•˜ë©´ sizeup 
+				//È®ÁøÀÚ¸¦ Ãß°¡ÇÒ·Á´Âµ¥
+				//¹è¿­ÀÇ Å©±â°¡ ºÎÁ·ÇÏ¸é sizeup 
 				if (IPpushIndex >= IParrSize(IPtable)) {
 					IPtable = tableSizeUP(IPtable, IParrSize(IPtable));
-					printf("ì‚¬ì´ì¦ˆì—…\n");
+					printf("»çÀÌÁî¾÷\n");
 				}
 				IPpush(&IPtable[IPpushIndex], IPpushIndex, gender, age, region);
 				IPpushIndex++;
 			}
 			
 		}
-		else if (order == '2') { // í™•ì§„ì ê²€ìƒ‰
+		else if (order == '2') { // È®ÁøÀÚ °Ë»ö
 			int searchIndex;
-			printf("ê²€ìƒ‰í•  IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (0 ì…ë ¥ì‹œ ì „ì²´ ê²€ìƒ‰, -1 ì…ë ¥ì‹œ ì „ì²´ ëª…ë‹¨ ë‚´ë³´ë‚´ê¸°): ");
+			printf("°Ë»öÇÒ ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (0 ÀÔ·Â½Ã ÀüÃ¼ °Ë»ö, -1 ÀÔ·Â½Ã ÀüÃ¼ ¸í´Ü ³»º¸³»±â): ");
 			scanf("%d", &searchIndex);
-			getchar(); //ì…ë ¥ë²„í¼ ì§€ìš°ê¸°
+			getchar(); //ÀÔ·Â¹öÆÛ Áö¿ì±â
 			IPsearchView(IPtable, searchIndex, files);
 		}
 		else if (order == '3') {
 			int IPID;
-			printf("ì‚­ì œí•  í™•ì§„ìì˜ ID: ");
+			printf("»èÁ¦ÇÒ È®ÁøÀÚÀÇ ID: ");
 			scanf("%d", &IPID);
 			getchar();
 			if (IPsearch(IPtable, IPID)) {
 				IPremove(IPtable, IPID);
 				//IPpushIndex--;
-				printf("í™•ì§„ì ì‚­ì œ ì™„ë£Œ\n");
+				printf("È®ÁøÀÚ »èÁ¦ ¿Ï·á\n");
 			}
 			else
-				printf("í™•ì§„ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì‹­ì‹œì˜¤.\n");
+				printf("È®ÁøÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ½Ê½Ã¿À.\n");
 		}
-		else if (order == '4') { //ë°€ì ‘ì ‘ì´‰ì ì¶”ê°€
-			int IPID; //ì–´ëŠ í™•ì§„ìì˜ ë°€ì ‘ì ‘ì´‰ìì¸ì§€ 
-			char vaccineName[20] = "ì—†ìŒ";
+		else if (order == '4') { //¹ĞÁ¢Á¢ÃËÀÚ Ãß°¡
+			int IPID; //¾î´À È®ÁøÀÚÀÇ ¹ĞÁ¢Á¢ÃËÀÚÀÎÁö 
+			char vaccineName[20] = "¾øÀ½";
 			int vaccination;
 			int scanRes = QTscan(IPtable, &IPID, vaccineName, &vaccination);
 			if (scanRes) {
-				//ë§í¬ë“œë¦¬ìŠ¤íŠ¸ëŠ” ì¶”ê°€í• ë•Œë§ˆë‹¤ í•˜ë‚˜ì”© ì‚¬ì´ì¦ˆë¥¼ ëŠ˜ë ¤ê°
+				//¸µÅ©µå¸®½ºÆ®´Â Ãß°¡ÇÒ¶§¸¶´Ù ÇÏ³ª¾¿ »çÀÌÁî¸¦ ´Ã·Á°¨
 				QTpush(IPtable[IPID].qurantineList, vaccineName, vaccination);
 			}
 		}
-		else if (order == '5') { //ë°€ì ‘ì ‘ì´‰ì ê²€ìƒ‰
-			//ë°€ì ‘ì ‘ì´‰ìëŠ” ì „ì²´ ê²€ìƒ‰ìœ¼ë¡œ êµ¬í˜„
+		else if (order == '5') { //¹ĞÁ¢Á¢ÃËÀÚ °Ë»ö
+			//¹ĞÁ¢Á¢ÃËÀÚ´Â ÀüÃ¼ °Ë»öÀ¸·Î ±¸Çö
 			int inputID;
-			printf("ë°€ì ‘ì ‘ì´‰ìë¥¼ ê²€ìƒ‰í•˜ë ¤ëŠ” í™•ì§„ìID ì…ë ¥: ");
+			printf("¹ĞÁ¢Á¢ÃËÀÚ¸¦ °Ë»öÇÏ·Á´Â È®ÁøÀÚID ÀÔ·Â: ");
 			scanf("%d", &inputID);
 			getchar();
-			if (IPsearch(IPtable, inputID)) { //í™•ì§„ìê°€ ì¡´ì¬í•œë‹¤ë©´ 
+			if (IPsearch(IPtable, inputID)) { //È®ÁøÀÚ°¡ Á¸ÀçÇÑ´Ù¸é 
 				QTsearchView(IPtable[inputID].qurantineList, inputID);
 			}
 			else {
-				printf("í™•ì§„ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì‹­ì‹œì˜¤.\n");
+				printf("È®ÁøÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ½Ê½Ã¿À.\n");
 			}
 		}
-		else if (order == '6') { //ë°€ì ‘ì ‘ì´‰ì ì‚­ì œ 
+		else if (order == '6') { //¹ĞÁ¢Á¢ÃËÀÚ »èÁ¦ 
 			int IPID;
 			int QID;
-			printf("í™•ì§„ìID: ");
+			printf("È®ÁøÀÚID: ");
 			scanf("%d", &IPID);
 			getchar();
 			if (IPsearch(IPtable, IPID)) {
-				printf("ë°€ì ‘ì ‘ì´‰ìID: ");
+				printf("¹ĞÁ¢Á¢ÃËÀÚID: ");
 				scanf("%d", &QID);
 				getchar();
 				if (QTremove(IPtable[IPID].qurantineList, QID))
-					printf("ë°€ì ‘ì ‘ì´‰ì ì‚­ì œê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+					printf("¹ĞÁ¢Á¢ÃËÀÚ »èÁ¦°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
 				else
-					printf("ë°€ì ‘ì ‘ì´‰ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
+					printf("¹ĞÁ¢Á¢ÃËÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n");
 			}
 			else
-				printf("í™•ì§„ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì‹­ì‹œì˜¤.\n");
+				printf("È®ÁøÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ½Ê½Ã¿À.\n");
 		}
 		else { 
-			printf("ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
+			printf("´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
 		}
 		
 		if (descriptionView == 4)
@@ -178,3 +189,4 @@ int main(int argc, char** argv) {
 	
 	return 0;
 }
+
